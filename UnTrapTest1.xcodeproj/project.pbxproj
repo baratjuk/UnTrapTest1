@@ -10,9 +10,22 @@
 		33E6B9632CF4CEAB0056BC7F /* UnTrapTest1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnTrapTest1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		33E6B9872CF4E3000056BC7F /* Exceptions for "UnTrapTest1" folder in "UnTrapTest1" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 33E6B9622CF4CEAB0056BC7F /* UnTrapTest1 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		33E6B9652CF4CEAB0056BC7F /* UnTrapTest1 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				33E6B9872CF4E3000056BC7F /* Exceptions for "UnTrapTest1" folder in "UnTrapTest1" target */,
+			);
 			path = UnTrapTest1;
 			sourceTree = "<group>";
 		};
@@ -249,12 +262,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UnTrapTest1/UnTrapTest1.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UnTrapTest1/Preview Content\"";
-				DEVELOPMENT_TEAM = 667YSHMYDY;
+				DEVELOPMENT_TEAM = 4KX5P5M565;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UnTrapTest1/Info.plist;
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "App requiares access to Screen Time data for monitoring apps use time.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -278,12 +294,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UnTrapTest1/UnTrapTest1.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UnTrapTest1/Preview Content\"";
-				DEVELOPMENT_TEAM = 667YSHMYDY;
+				DEVELOPMENT_TEAM = 4KX5P5M565;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UnTrapTest1/Info.plist;
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "App requiares access to Screen Time data for monitoring apps use time.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

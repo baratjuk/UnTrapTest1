@@ -7,10 +7,13 @@
 
 import SwiftUI
 import SwiftData
+import DeviceActivity
+import FamilyControls
 
 struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    @StateObject private var viewModel = MainViewModel()
 
     var body: some View {
         NavigationSplitView {
@@ -60,6 +63,31 @@ struct MainView: View {
 #Preview {
     MainView()
         .modelContainer(for: Item.self, inMemory: true)
+}
+
+extension MainView {
+    @MainActor class MainViewModel: ObservableObject {
+        @Published var isPresented = false
+        @Published var isWaiting = false
+        
+        let center = AuthorizationCenter.shared
+        
+        init() {
+            Task {
+                do {
+                    try await center.requestAuthorization(for: .individual
+                    )
+                } catch {
+                    print("Failed with \(error)")
+                }
+            }
+            
+        }
+        
+        deinit {
+            
+        }
+    }
 }
 
 
