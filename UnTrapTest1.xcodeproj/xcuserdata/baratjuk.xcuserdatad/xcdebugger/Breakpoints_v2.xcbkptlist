@@ -32,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
-            landmarkName = "resetButton"
+            landmarkName = "daysOfWeekCounter"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -48,7 +48,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "55"
             endingLineNumber = "55"
-            landmarkName = "resetButton"
+            landmarkName = "daysOfWeekCounter"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>

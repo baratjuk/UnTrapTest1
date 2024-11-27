@@ -40,24 +40,24 @@ struct MainView: View {
                         DatePicker("", selection: $viewModel.ends, displayedComponents: .hourAndMinute)
                     }
                 }
-                Section(footer: self.resetButton) {
+                Section(footer: self.daysOfWeekCounter) {
                     EmptyView().frame(height:0)
                 }
             }
         }
     }
     
-    private var resetButton: some View {
+    private var daysOfWeekCounter: some View {
         VStack {
             HStack {
-                ForEach(0..<viewModel.items.count) { i in
+                ForEach(0..<viewModel.daysOfWeek.count) { i in
                     Button {
-                        $viewModel.items[i].state.wrappedValue = !$viewModel.items[i].state.wrappedValue
+                        $viewModel.daysOfWeek[i].state.wrappedValue = !$viewModel.daysOfWeek[i].state.wrappedValue
                     } label: {
-                        Text(viewModel.items[i].title)
+                        Text(viewModel.daysOfWeek[i].title)
                             .foregroundColor(Color.white)
                             .frame(width: 40, height: 40, alignment: .center)
-                            .background($viewModel.items[i].state.wrappedValue ? Color.blue : Color.gray)
+                            .background($viewModel.daysOfWeek[i].state.wrappedValue ? Color.blue : Color.gray)
                     }.cornerRadius(10.0)
                 }
             }
@@ -79,7 +79,7 @@ extension MainView {
         @Published var isSwitchOn = false
         @Published var starts = Date.now
         @Published var ends = Date.now
-        @Published var items: [Item] = [
+        @Published var daysOfWeek: [Item] = [
             Item("M"),
             Item("T"),
             Item("W"),
@@ -103,7 +103,7 @@ extension MainView {
         }
         
         func daysSelected() -> Int {
-            return items.filter {
+            return daysOfWeek.filter {
                 item in item.state
             }.count
         }
