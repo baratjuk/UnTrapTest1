@@ -11,64 +11,82 @@ import DeviceActivity
 import FamilyControls
 
 struct MainView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    
     @StateObject private var viewModel = MainViewModel()
 
     var body: some View {
-        NavigationSplitView {
+        VStack {
             List {
-                ForEach(items) { item in
+                Section {
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text("Apps & Websites")
+                    }
+                    HStack {
+                        Text("All day")
+                        Spacer()
+                        Toggle("", isOn: $viewModel.isSwitchOn)
+                            .toggleStyle(.switch)
+                    }
+                    HStack {
+                        Text("Starts")
+                        Spacer()
+                        DatePicker("", selection: $viewModel.starts, displayedComponents: .hourAndMinute)
+                    }
+                    HStack {
+                        Text("Ends")
+                        Spacer()
+                        DatePicker("", selection: $viewModel.ends, displayedComponents: .hourAndMinute)
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+                Section(footer: self.resetButton) {
+                    EmptyView().frame(height:0)
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }.onAppear {
-            
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+    
+    private var resetButton: some View {
+        VStack {
+            HStack {
+                ForEach(0..<viewModel.items.count) { i in
+                    Button {
+                        $viewModel.items[i].state.wrappedValue = !$viewModel.items[i].state.wrappedValue
+                    } label: {
+                        Text(viewModel.items[i].title)
+                            .foregroundColor(Color.white)
+                            .frame(width: 40, height: 40, alignment: .center)
+                            .background($viewModel.items[i].state.wrappedValue ? Color.blue : Color.gray)
+                    }.cornerRadius(10.0)
+                }
             }
+            .padding()
+            HStack {
+                Text("Days of week active (7 of \(viewModel.daysSelected())")
+                Spacer()
+            }.padding(.leading)
         }
     }
+    
 }
 
 #Preview {
-    MainView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
 
 extension MainView {
     @MainActor class MainViewModel: ObservableObject {
-        @Published var isPresented = false
-        @Published var isWaiting = false
+        @Published var isSwitchOn = false
+        @Published var starts = Date.now
+        @Published var ends = Date.now
+        @Published var items: [Item] = [
+            Item("M"),
+            Item("T"),
+            Item("W"),
+            Item("T"),
+            Item("F"),
+            Item("S"),
+            Item("S")]
         
         let center = AuthorizationCenter.shared
         
@@ -84,9 +102,16 @@ extension MainView {
             
         }
         
+        func daysSelected() -> Int {
+            return items.filter {
+                item in item.state
+            }.count
+        }
+        
         deinit {
             
         }
+        
     }
 }
 

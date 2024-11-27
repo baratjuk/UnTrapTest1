@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import SwiftData
 
-@Model
 final class Item {
-    var timestamp: Date
+    var title: String
+    var state = true
     
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+    init(_ title: String) {
+        self.title = title
     }
 }
