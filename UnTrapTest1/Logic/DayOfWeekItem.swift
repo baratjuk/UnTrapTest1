@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Item {
+final class DayOfWeekItem {
     var title: String
     var state = true
     

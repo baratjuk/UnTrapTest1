@@ -18,15 +18,29 @@ struct MainView: View {
         VStack {
             List {
                 Section {
-                    NavigationLink {
-                        
-                    } label: {
+                    HStack {
                         Text("Apps & Websites")
+                        Spacer()
+                        Button {
+                            appsAndWebsites()
+                        } label: {
+                            HStack {
+                                Image(systemName: "info.circle.fill")
+                                Text("Select")
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.orange)
+                        Image(systemName: "chevron.right")
+                            .opacity(0.5)
+                    }
+                    .onTapGesture {
+                        appsAndWebsites()
                     }
                     HStack {
                         Text("All day")
                         Spacer()
-                        Toggle("", isOn: $viewModel.isSwitchOn)
+                        Toggle("", isOn: $viewModel.isAllDays)
                             .toggleStyle(.switch)
                     }
                     HStack {
@@ -42,8 +56,10 @@ struct MainView: View {
                 }
                 Section(footer: self.daysOfWeekCounter) {
                     EmptyView().frame(height:0)
-                }
+                }.padding(.leading, -16)
+                    
             }
+            .listSectionSpacing(0)
         }
     }
     
@@ -55,18 +71,21 @@ struct MainView: View {
                         $viewModel.daysOfWeek[i].state.wrappedValue = !$viewModel.daysOfWeek[i].state.wrappedValue
                     } label: {
                         Text(viewModel.daysOfWeek[i].title)
-                            .foregroundColor(Color.white)
-                            .frame(width: 40, height: 40, alignment: .center)
-                            .background($viewModel.daysOfWeek[i].state.wrappedValue ? Color.blue : Color.gray)
-                    }.cornerRadius(10.0)
+                    }
+                    .tint($viewModel.daysOfWeek[i].state.wrappedValue ? Color.indigo : Color.gray)
+                    .buttonStyle(.borderedProminent)
                 }
             }
-            .padding()
             HStack {
                 Text("Days of week active (7 of \(viewModel.daysSelected())")
+                    .font(.system(size: 16))
                 Spacer()
-            }.padding(.leading)
+            }
         }
+    }
+    
+    private func appsAndWebsites() {
+        print("Select")
     }
     
 }
@@ -76,36 +95,36 @@ struct MainView: View {
 
 extension MainView {
     @MainActor class MainViewModel: ObservableObject {
-        @Published var isSwitchOn = false
+        @Published var isAllDays = false
         @Published var starts = Date.now
         @Published var ends = Date.now
-        @Published var daysOfWeek: [Item] = [
-            Item("M"),
-            Item("T"),
-            Item("W"),
-            Item("T"),
-            Item("F"),
-            Item("S"),
-            Item("S")]
+        @Published var daysOfWeek: [DayOfWeekItem] = [
+            DayOfWeekItem("M"),
+            DayOfWeekItem("T"),
+            DayOfWeekItem("W"),
+            DayOfWeekItem("T"),
+            DayOfWeekItem("F"),
+            DayOfWeekItem("S"),
+            DayOfWeekItem("S")]
         
         let center = AuthorizationCenter.shared
         
         init() {
-            Task {
-                do {
-                    try await center.requestAuthorization(for: .individual
-                    )
-                } catch {
-                    print("Failed with \(error)")
-                }
-            }
+//            Task {
+//                do {
+//                    try await center.requestAuthorization(for: .individual)
+//                } catch {
+//                    print("Failed with \(error)")
+//                }
+//            }
             
         }
         
         func daysSelected() -> Int {
             return daysOfWeek.filter {
                 item in item.state
-            }.count
+            }
+            .count
         }
         
         deinit {
