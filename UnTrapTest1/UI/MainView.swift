@@ -56,7 +56,9 @@ struct MainView: View {
                 }
                 Section(footer: self.daysOfWeekCounter) {
                     EmptyView().frame(height:0)
-                }.padding(.leading, -16)
+                }
+                .padding(.leading, -16)
+                .padding(.trailing, -16)
                     
             }
             .listSectionSpacing(0)
@@ -71,10 +73,14 @@ struct MainView: View {
                         $viewModel.daysOfWeek[i].state.wrappedValue = !$viewModel.daysOfWeek[i].state.wrappedValue
                     } label: {
                         Text(viewModel.daysOfWeek[i].title)
+                            .padding(.horizontal, 3)
+                            .padding(.vertical, 3)
                     }
                     .tint($viewModel.daysOfWeek[i].state.wrappedValue ? Color.indigo : Color.gray)
                     .buttonStyle(.borderedProminent)
+                    .controlSize(.regular)
                 }
+                Spacer()
             }
             HStack {
                 Text("Days of week active (7 of \(viewModel.daysSelected())")
