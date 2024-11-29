@@ -68,7 +68,8 @@ struct MainView: View {
     private var daysOfWeekCounter: some View {
         VStack {
             HStack {
-                ForEach(0..<viewModel.daysOfWeek.count) { i in
+                let daysCount: Int = viewModel.daysOfWeek.count
+                ForEach(0..<daysCount) { i in
                     Button {
                         $viewModel.daysOfWeek[i].state.wrappedValue = !$viewModel.daysOfWeek[i].state.wrappedValue
                     } label: {
@@ -79,8 +80,11 @@ struct MainView: View {
                     .tint($viewModel.daysOfWeek[i].state.wrappedValue ? Color.indigo : Color.gray)
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
+                    .cornerRadius(15.0)
+                    if i < daysCount - 1 {
+                        Spacer()
+                    }
                 }
-                Spacer()
             }
             HStack {
                 Text("Days of week active (7 of \(viewModel.daysSelected())")
