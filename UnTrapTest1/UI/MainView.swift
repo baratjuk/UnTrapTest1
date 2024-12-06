@@ -69,7 +69,7 @@ struct MainView: View {
         VStack {
             HStack {
                 let daysCount: Int = viewModel.daysOfWeek.count
-                ForEach(0..<daysCount) { i in
+                ForEach(0..<daysCount, id: \.self) { i in
                     Button {
                         $viewModel.daysOfWeek[i].state.wrappedValue = !$viewModel.daysOfWeek[i].state.wrappedValue
                     } label: {
@@ -120,13 +120,13 @@ extension MainView {
         let center = AuthorizationCenter.shared
         
         init() {
-//            Task {
-//                do {
-//                    try await center.requestAuthorization(for: .individual)
-//                } catch {
-//                    print("Failed with \(error)")
-//                }
-//            }
+            Task {
+                do {
+                    try await center.requestAuthorization(for: .individual)
+                } catch {
+                    print("Failed with \(error)")
+                }
+            }
             
         }
         
