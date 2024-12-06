@@ -68,10 +68,9 @@ struct MainView: View {
     private var daysOfWeekCounter: some View {
         VStack {
             HStack {
-                let lastId = viewModel.lastId()
                 ForEach($viewModel.daysOfWeek) { $item in
                     Button {
-                        $item.state.wrappedValue = !$item.state.wrappedValue
+                        $item.state.wrappedValue.toggle()
                     } label: {
                         Text(item.title)
                             .padding(.horizontal, 3)
@@ -81,7 +80,7 @@ struct MainView: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
                     .cornerRadius(15.0)
-                    if item.id != lastId {
+                    if item.id != viewModel.lastId() {
                         Spacer()
                     }
                 }
