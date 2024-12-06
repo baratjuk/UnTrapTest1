@@ -68,20 +68,19 @@ struct MainView: View {
     private var daysOfWeekCounter: some View {
         VStack {
             HStack {
-                let daysCount: Int = viewModel.daysOfWeek.count
-                ForEach(0..<daysCount, id: \.self) { i in
+                ForEach($viewModel.daysOfWeek) { $item in
                     Button {
-                        $viewModel.daysOfWeek[i].state.wrappedValue = !$viewModel.daysOfWeek[i].state.wrappedValue
+                        $item.state.wrappedValue = !$item.state.wrappedValue
                     } label: {
-                        Text(viewModel.daysOfWeek[i].title)
+                        Text(item.title)
                             .padding(.horizontal, 3)
                             .padding(.vertical, 3)
                     }
-                    .tint($viewModel.daysOfWeek[i].state.wrappedValue ? Color.indigo : Color.gray)
+                    .tint(item.state ? Color.indigo : Color.gray)
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
                     .cornerRadius(15.0)
-                    if i < daysCount - 1 {
+                    if !item.last {
                         Spacer()
                     }
                 }
@@ -115,7 +114,7 @@ extension MainView {
             DayOfWeekItem("T"),
             DayOfWeekItem("F"),
             DayOfWeekItem("S"),
-            DayOfWeekItem("S")]
+            DayOfWeekItem("S", true)]
         
         let center = AuthorizationCenter.shared
         
