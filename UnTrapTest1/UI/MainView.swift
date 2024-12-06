@@ -68,6 +68,7 @@ struct MainView: View {
     private var daysOfWeekCounter: some View {
         VStack {
             HStack {
+                let lastId = viewModel.lastId()
                 ForEach($viewModel.daysOfWeek) { $item in
                     Button {
                         $item.state.wrappedValue = !$item.state.wrappedValue
@@ -80,13 +81,13 @@ struct MainView: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
                     .cornerRadius(15.0)
-                    if !item.last {
+                    if item.id != lastId {
                         Spacer()
                     }
                 }
             }
             HStack {
-                Text("Days of week active (7 of \(viewModel.daysSelected())")
+                Text("Days of week active (7 of \(viewModel.daysSelected()))")
                     .font(.system(size: 16))
                 Spacer()
             }
@@ -114,7 +115,7 @@ extension MainView {
             DayOfWeekItem("T"),
             DayOfWeekItem("F"),
             DayOfWeekItem("S"),
-            DayOfWeekItem("S", true)]
+            DayOfWeekItem("S")]
         
         let center = AuthorizationCenter.shared
         
@@ -127,6 +128,10 @@ extension MainView {
                 }
             }
             
+        }
+        
+        func lastId() -> UUID {
+            return daysOfWeek.last?.id ?? UUID()
         }
         
         func daysSelected() -> Int {
