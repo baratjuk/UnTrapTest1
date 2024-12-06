@@ -86,7 +86,7 @@ struct MainView: View {
                 }
             }
             HStack {
-                Text("Days of week active (7 of \(viewModel.daysSelected()))")
+                Text("Days of week active (\(viewModel.daysSelected()) of 7)")
                     .font(.system(size: 16))
                 Spacer()
             }
